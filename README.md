@@ -116,6 +116,8 @@ export CGO_CFLAGS="-I $SAPNWRFC_HOME/include"
 export CGO_LDFLAGS="-L $SAPNWRFC_HOME/lib"
 export CGO_CFLAGS_ALLOW=.*
 export CGO_LDFLAGS_ALLOW=.*
+echo "If SAP NWRFC SDK is not installed in default OS library path"
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:$SAPNWRFC_HOME/lib"
 go get github.com/stretchr/testify
 go get github.com/sap/gorfc
 cd $GOPATH/src/github.com/sap/gorfc/gorfc
