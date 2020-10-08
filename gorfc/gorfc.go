@@ -237,7 +237,12 @@ func fillVariable(cType C.RFCTYPE, container C.RFC_FUNCTION_HANDLE, cName *C.SAP
 		}
 		rc = C.RfcSetDate(container, cName, (*C.RFC_CHAR)(cValue), &errorInfo)
 	case C.RFCTYPE_TIME:
-		cValue, err = fillString(value.(time.Time).Format("150405"))
+		switch v := value.(type) {
+		case time.Time:
+			cValue, err = fillString(value.(time.Time).Format("150405"))
+		default:
+			cValue, err = fillString(fmt.Sprintf("%v", v))
+		}
 		rc = C.RfcSetTime(container, cName, (*C.RFC_CHAR)(cValue), &errorInfo)
 	case C.RFCTYPE_UTCLONG:
 		cValue, err = fillString(reflect.ValueOf(value).String())
